@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   const pulseBtn = document.getElementById('pulse-btn');
   const swatches = document.querySelectorAll('.swatch[data-palette]');
+  const controlsBar = document.getElementById('controls-bar');
 
   // 1. Parse Pathname & Query Parameters
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const customLogoUrl = urlParams.get('logo');
   const customName = urlParams.get('nome') || urlParams.get('name');
   const customPalette = urlParams.get('palette') || urlParams.get('cor');
+  const showControlsParam = urlParams.get('controls');
+
+  // Hide control bar for internal event pages (/wdcom, /nome-do-evento) unless explicitly requested
+  if ((eventSlug || customLogoUrl) && showControlsParam !== 'true' && controlsBar) {
+    controlsBar.style.display = 'none';
+  }
 
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
