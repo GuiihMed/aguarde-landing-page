@@ -39,11 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Format status string with letter spacing (e.g., "AGUARDE" -> "A G U A R D E")
+  // Format status string cleanly without unnatural character gaps (e.g., "AGUARDE")
   function formatStatusText(str) {
-    const textToFormat = str ? str.trim() : 'AGUARDE';
-    const clean = textToFormat.toUpperCase().replace(/\s+/g, '');
-    return clean.split('').join(' ');
+    if (!str) return 'AGUARDE';
+    return str.trim().toUpperCase();
   }
 
   // Load Event Data from events.json or URL parameters

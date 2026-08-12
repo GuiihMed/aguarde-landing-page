@@ -60,7 +60,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.8rem;
+  gap: 1.6rem;
   pointer-events: none;
 }
 
@@ -78,12 +78,12 @@ html, body {
   transition: width 0.3s ease, max-height 0.3s ease, border-radius 0.3s ease;
 }
 
-/* Glassmorphic "AGUARDE" Status Badge with Montserrat Typography */
+/* Glassmorphic "AGUARDE" Status Badge with Clean Montserrat Typography */
 .wallpaper-status-badge {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 0.65rem 1.8rem;
+  gap: 10px;
+  padding: 0.55rem 1.6rem;
   background: rgba(3, 27, 38, 0.55);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -92,9 +92,9 @@ html, body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(0, 195, 255, 0.2);
   color: var(--text-white);
   font-family: var(--font-main);
-  font-size: clamp(0.75rem, 1.6vw, 1.05rem);
-  font-weight: 800;
-  letter-spacing: 0.55em;
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   pointer-events: none;
   user-select: none;
@@ -103,8 +103,8 @@ html, body {
 
 /* Pulsing Glowing Dot inside Status Badge */
 .badge-pulse-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background: var(--accent-cyan);
   border-radius: 50%;
   box-shadow: 0 0 12px var(--accent-cyan);
@@ -216,8 +216,8 @@ html, body {
   }
 
   .wallpaper-status-badge {
-    padding: 0.5rem 1.4rem;
-    letter-spacing: 0.45em;
+    padding: 0.45rem 1.3rem;
+    letter-spacing: 0.15em;
   }
 
   .minimal-controls {
