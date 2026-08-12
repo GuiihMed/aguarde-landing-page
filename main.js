@@ -1,6 +1,6 @@
 /**
  * WDCOM & Eventos - Dynamic Landing Page Engine
- * Home page (/): Shows ONLY the interactive canvas wallpaper (no logo, no box, no aguarde badge).
+ * Home & WDCOM base routes (/ and /wdcom): Shows ONLY the interactive canvas wallpaper (no logo, no box, no aguarde badge).
  * Internal Event Pages (/sonafe-df): Displays event logo & AGUARDE status badge, hides controls bar.
  */
 
@@ -31,22 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const pathParts = cleanPath.split('/').filter(p => p && p !== 'index.html');
   const pathSlug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : null;
 
-  const eventSlug = urlParams.get('evento') || urlParams.get('event') || pathSlug;
+  // Treat root "/" AND "/wdcom" as base clean routes
+  const isBaseWdcomRoute = !pathSlug || pathSlug === 'wdcom';
+  const isInternalEventPage = !isBaseWdcomRoute && Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || urlParams.get('logo'));
+
+  const eventSlug = isInternalEventPage ? (urlParams.get('evento') || urlParams.get('event') || pathSlug) : null;
   const customLogoUrl = urlParams.get('logo');
   const customName = urlParams.get('nome') || urlParams.get('name');
   const customPalette = urlParams.get('palette') || urlParams.get('cor');
   const customStatus = urlParams.get('status');
 
-  // Determine if this is an internal event page vs root home page
-  const isInternalEventPage = Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || customLogoUrl);
-
-  // Home Page vs Internal Event Page Visibility Controls
+  // Controls Bar & Status Badge Visibility Logic
   if (controlsBar) {
     controlsBar.style.display = isInternalEventPage ? 'none' : 'block';
   }
 
   if (wallpaperWrapper) {
-    // Hide center logo, box, and AGUARDE badge completely on root Home page (/)
+    // Hide center logo, box, and AGUARDE badge completely on / and /wdcom
     // Display center container ONLY on internal event routes (/sonafe-df, etc.)
     wallpaperWrapper.style.display = isInternalEventPage ? 'flex' : 'none';
   }
@@ -99,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
           logoUrl = eventsData.default.logo || logoUrl;
           eventName = eventsData.default.name || eventName;
           paletteKey = eventsData.default.palette || paletteKey;
-          rawStatus = eventsData.default.status || 'AGUARDE';
+          rawStatus = eventsData.default.status || '';
           shareLogoUrl = eventsData.default.logo || shareLogoUrl;
         }
       }

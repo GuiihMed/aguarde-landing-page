@@ -40,15 +40,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
   <!-- CSS Stylesheet (Cache-Busting Version) -->
-  <link rel="stylesheet" href="style.css?v=6.0.0">
+  <link rel="stylesheet" href="style.css?v=6.1.0">
 </head>
 <body>
 
   <!-- Fullscreen Interactive Canvas Background -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Centered Event Content Wrapper (Oculto na Home, visível APENAS nas páginas de eventos) -->
-  <main class="wallpaper-wrapper" id="wallpaper-wrapper">
+  <!-- Centered Event Content Wrapper (Oculto na Home e em /wdcom, visível APENAS nas páginas de eventos como /sonafe-df) -->
+  <main class="wallpaper-wrapper" id="wallpaper-wrapper" style="display: none;">
     <div class="wallpaper-center-container">
       <img src="assets/social-share-logo.png" alt="Logo do Evento" class="wallpaper-logo" id="wallpaper-logo">
       <div class="wallpaper-status-badge" id="wallpaper-status">
@@ -58,7 +58,7 @@
     </div>
   </main>
 
-  <!-- Controls Bar (Exibida APENAS na Página Inicial) -->
+  <!-- Controls Bar (Exibida APENAS na Página Inicial e /wdcom) -->
   <div class="minimal-controls" id="controls-bar">
     <div class="control-actions">
       <!-- Fullscreen Toggle -->
@@ -88,7 +88,7 @@
   </div>
 
   <!-- Scripts (Cache-Busting Version) -->
-  <script src="canvas-background.js?v=6.0.0"></script>
-  <script src="main.js?v=6.0.0"></script>
+  <script src="canvas-background.js?v=6.1.0"></script>
+  <script src="main.js?v=6.1.0"></script>
 </body>
 </html>

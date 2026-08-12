@@ -4,14 +4,7 @@
     "name": "WDCOM Mídia Digital",
     "logo": "assets/social-share-logo.png",
     "palette": "wdcom",
-    "status": "AGUARDE"
-  },
-  "wdcom": {
-    "slug": "wdcom",
-    "name": "WDCOM Mídia Digital",
-    "logo": "assets/social-share-logo.png",
-    "palette": "wdcom",
-    "status": "AGUARDE"
+    "status": ""
   },
   "sonafe-df": {
     "slug": "sonafe-df",
