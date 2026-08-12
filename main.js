@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Format status string with letter spacing (e.g., "AGUARDE" -> "A G U A R D E")
   function formatStatusText(str) {
-    if (!str) return 'A G U A R D E';
-    const clean = str.trim().toUpperCase().replace(/\s+/g, '');
+    const textToFormat = str ? str.trim() : 'AGUARDE';
+    const clean = textToFormat.toUpperCase().replace(/\s+/g, '');
     return clean.split('').join(' ');
   }
 
@@ -63,12 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
           logoUrl = config.logo || logoUrl;
           eventName = config.name || eventName;
           paletteKey = config.palette || paletteKey;
-          rawStatus = config.status || rawStatus;
+          rawStatus = config.status || 'AGUARDE';
         } else if (eventsData.default) {
           logoUrl = eventsData.default.logo || logoUrl;
           eventName = eventsData.default.name || eventName;
           paletteKey = eventsData.default.palette || paletteKey;
-          rawStatus = eventsData.default.status || rawStatus;
+          rawStatus = eventsData.default.status || 'AGUARDE';
         }
       }
     } catch (err) {

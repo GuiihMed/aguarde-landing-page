@@ -4,20 +4,20 @@
     "name": "WDCOM Mídia Digital",
     "logo": "assets/logo-mark.png",
     "palette": "wdcom",
-    "status": "Em Breve"
+    "status": "AGUARDE"
   },
   "wdcom": {
     "slug": "wdcom",
     "name": "WDCOM Mídia Digital",
     "logo": "assets/logo-mark.png",
     "palette": "wdcom",
-    "status": "Em Breve"
+    "status": "AGUARDE"
   },
   "sonafe-df": {
     "slug": "sonafe-df",
     "name": "2ª Jornada de Fisioterapia Esportiva do DF",
     "logo": "assets/sonafe-df.png",
     "palette": "sonafe",
-    "status": "Em Breve"
+    "status": "AGUARDE"
   }
 }
