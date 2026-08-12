@@ -1,11 +1,16 @@
 /**
  * WDCOM & Eventos - Dynamic Aguarde Landing Page Engine
- * Supports clean URL paths (/wdcom, /nome-do-evento) and query parameters (?evento=nome, ?logo=URL)
+ * Displays controls bar ONLY on the root home page (/)
+ * Hides controls bar on internal event pages (/wdcom, /nome-do-evento)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const wallpaperLogo = document.getElementById('wallpaper-logo');
+  const fullscreenBtn = document.getElementById('fullscreen-btn');
+  const pulseBtn = document.getElementById('pulse-btn');
+  const swatches = document.querySelectorAll('.swatch[data-palette]');
+  const controlsBar = document.getElementById('controls-bar');
 
   // Parse Pathname & Query Parameters
   const urlParams = new URLSearchParams(window.location.search);
@@ -19,6 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const customLogoUrl = urlParams.get('logo');
   const customName = urlParams.get('nome') || urlParams.get('name');
   const customPalette = urlParams.get('palette') || urlParams.get('cor');
+
+  // Determine if this is an internal event page vs root home page
+  const isInternalEventPage = Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || customLogoUrl);
+
+  // Show controls bar ONLY on the root home page, hide on internal event pages
+  if (controlsBar) {
+    if (isInternalEventPage) {
+      controlsBar.style.display = 'none';
+    } else {
+      controlsBar.style.display = 'block';
+    }
+  }
 
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
@@ -68,9 +85,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply Theme Palette
     if (window.bgEngine) {
       window.bgEngine.setPalette(paletteKey);
+      
+      swatches.forEach(s => {
+        if (s.getAttribute('data-palette') === paletteKey) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
     }
   }
 
   loadEventConfig();
+
+  // Fullscreen Toggle
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn('Erro ao entrar em fullscreen:', err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    });
+  }
+
+  // Shockwave Pulse Button
+  if (pulseBtn) {
+    pulseBtn.addEventListener('click', () => {
+      if (window.bgEngine) {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        window.bgEngine.triggerShockwave(cx, cy);
+        setTimeout(() => window.bgEngine.triggerShockwave(cx - 150, cy - 100), 150);
+        setTimeout(() => window.bgEngine.triggerShockwave(cx + 150, cy + 100), 300);
+      }
+    });
+  }
+
+  // Color Palette Switcher
+  swatches.forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      swatches.forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+      const paletteKey = swatch.getAttribute('data-palette');
+      if (window.bgEngine) {
+        window.bgEngine.setPalette(paletteKey);
+      }
+    });
+  });
 
 });

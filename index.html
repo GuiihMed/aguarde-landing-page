@@ -10,20 +10,49 @@
   <link rel="icon" type="image/png" href="assets/logo-mark.png">
   
   <!-- CSS Stylesheet (Cache-Busting Version) -->
-  <link rel="stylesheet" href="style.css?v=2.0.0">
+  <link rel="stylesheet" href="style.css?v=3.0.0">
 </head>
 <body>
 
   <!-- Fullscreen Interactive Canvas Background -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Centered Event Logo (Pura, Sem Ferramentas/Barra) -->
+  <!-- Centered Event Logo -->
   <main class="wallpaper-wrapper">
     <img src="assets/logo-mark.png" alt="Logo do Evento" class="wallpaper-logo" id="wallpaper-logo">
   </main>
 
+  <!-- Controls Bar (Exibida APENAS na Página Inicial) -->
+  <div class="minimal-controls" id="controls-bar">
+    <div class="control-actions">
+      <!-- Fullscreen Toggle -->
+      <button class="icon-btn" id="fullscreen-btn" title="Tela Cheia (Fullscreen)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+
+      <!-- Shockwave Trigger -->
+      <button class="icon-btn" id="pulse-btn" title="Disparar Onda de Impacto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+      </button>
+
+      <!-- Color Swatches -->
+      <div class="swatch-list">
+        <div class="swatch active" data-palette="wdcom" style="background: #00c3ff;" title="WDCOM Teal"></div>
+        <div class="swatch" data-palette="black" style="background: #000000; border: 1px solid #444;" title="Tela Preta (OLED Black)"></div>
+        <div class="swatch" data-palette="cyber" style="background: #ff007f;" title="Cyber Neon"></div>
+        <div class="swatch" data-palette="gold" style="background: #ffb703;" title="Midnight Gold"></div>
+        <div class="swatch" data-palette="emerald" style="background: #00e676;" title="Emerald Matrix"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts (Cache-Busting Version) -->
-  <script src="canvas-background.js?v=2.0.0"></script>
-  <script src="main.js?v=2.0.0"></script>
+  <script src="canvas-background.js?v=3.0.0"></script>
+  <script src="main.js?v=3.0.0"></script>
 </body>
 </html>
