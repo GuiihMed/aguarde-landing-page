@@ -1,13 +1,13 @@
 /**
- * WDCOM & Eventos - Dynamic Aguarde Landing Page Engine
- * Displays controls bar ONLY on the root home page (/)
- * Hides controls bar on internal event pages (/wdcom, /sonafe-df, /nome-do-evento)
- * Dynamically updates Open Graph social media sharing cards for WhatsApp, Instagram, Telegram & Twitter
+ * WDCOM & Eventos - Dynamic Landing Page Engine
+ * Home page (/): Shows controls bar, hides AGUARDE status badge, displays official WDCOM logo
+ * Internal Event Pages (/sonafe-df): Hides controls bar, shows AGUARDE status badge, displays event logo
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const wallpaperLogo = document.getElementById('wallpaper-logo');
+  const wallpaperStatus = document.getElementById('wallpaper-status');
   const statusText = document.getElementById('status-text');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   const pulseBtn = document.getElementById('pulse-btn');
@@ -39,13 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Determine if this is an internal event page vs root home page
   const isInternalEventPage = Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || customLogoUrl);
 
-  // Show controls bar ONLY on the root home page, hide on internal event pages
+  // Controls Bar & Status Badge Visibility Logic
   if (controlsBar) {
-    if (isInternalEventPage) {
-      controlsBar.style.display = 'none';
-    } else {
-      controlsBar.style.display = 'block';
-    }
+    controlsBar.style.display = isInternalEventPage ? 'none' : 'block';
+  }
+
+  if (wallpaperStatus) {
+    // Hide AGUARDE badge on the root home page, show ONLY on internal event pages
+    wallpaperStatus.style.display = isInternalEventPage ? 'inline-flex' : 'none';
   }
 
   // Format status string cleanly (e.g., "AGUARDE")
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
-    let logoUrl = 'assets/social-share-logo.png';
+    let logoUrl = 'assets/logo-mark.png';
     let eventName = 'WDCOM Mídia Digital';
     let paletteKey = 'wdcom';
     let rawStatus = 'AGUARDE';
@@ -114,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply Logo on screen, Status Badge & Document Title
     if (wallpaperLogo) {
       wallpaperLogo.src = logoUrl;
-      wallpaperLogo.alt = `${eventName} - Aguarde`;
+      wallpaperLogo.alt = eventName;
     }
 
     if (statusText) {
