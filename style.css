@@ -1,6 +1,6 @@
 /* ==========================================================================
    WDCOM Mídia Digital - Fullscreen Interactive Wallpaper Styles
-   Typography: Montserrat
+   Clean, Pure & Minimal
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap');
@@ -41,7 +41,7 @@ html, body {
   touch-action: none;
 }
 
-/* Centered Wallpaper Content Wrapper */
+/* Centered Wallpaper Content Wrapper - No Box, No Background */
 .wallpaper-wrapper {
   position: relative;
   z-index: 10;
@@ -52,9 +52,12 @@ html, body {
   justify-content: center;
   pointer-events: none;
   padding: 1.5rem;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Center Container (Logo + Status Badge) */
+/* Center Container - Absolutely No Box or Container Background */
 .wallpaper-center-container {
   display: flex;
   flex-direction: column;
@@ -62,23 +65,29 @@ html, body {
   justify-content: center;
   gap: 1.6rem;
   pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Pure Logo Image with Fluid & Mobile Responsive Scaling */
+/* Pure Event Logo Image - Transparent, No Background Card */
 .wallpaper-logo {
   width: clamp(240px, 50vw, 750px);
   max-width: 90vw;
-  max-height: 44vh;
+  max-height: 48vh;
   height: auto;
   object-fit: contain;
   border-radius: 20px;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 20px rgba(0, 195, 255, 0.25));
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
   pointer-events: none;
   user-select: none;
-  transition: width 0.3s ease, max-height 0.3s ease, border-radius 0.3s ease;
+  transition: width 0.3s ease, max-height 0.3s ease;
 }
 
-/* Glassmorphic "AGUARDE" Status Badge with Clean Montserrat Typography */
+/* Glassmorphic Status Badge (Usado APENAS nas Páginas Internas de Eventos) */
 .wallpaper-status-badge {
   display: inline-flex;
   align-items: center;
@@ -118,7 +127,7 @@ html, body {
   100% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 195, 255, 0); }
 }
 
-/* Minimal Floating Controls Bar (Exibida na Home) */
+/* Minimal Floating Controls Bar (Exibida APENAS na Página Inicial) */
 .minimal-controls {
   position: fixed;
   bottom: 2rem;
@@ -212,7 +221,6 @@ html, body {
     width: 88vw;
     max-height: 48vh;
     border-radius: 14px;
-    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 15px rgba(0, 195, 255, 0.3));
   }
 
   .wallpaper-status-badge {
