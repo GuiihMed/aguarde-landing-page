@@ -1,5 +1,6 @@
 /* ==========================================================================
    WDCOM Mídia Digital - Fullscreen Interactive Wallpaper Styles
+   Responsive & Mobile Optimized
    ========================================================================== */
 
 :root {
@@ -22,6 +23,7 @@ html, body {
   background-color: var(--bg-dark);
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none; /* Prevent unwanted pull-to-refresh on mobile devices */
 }
 
 /* Fullscreen Background Canvas */
@@ -32,6 +34,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   z-index: 1;
+  touch-action: none;
 }
 
 /* Centered Wallpaper Content */
@@ -44,18 +47,21 @@ html, body {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  padding: 1.5rem;
 }
 
-/* Pure Logo Image with Rounded Corners */
+/* Pure Logo Image with Fluid & Mobile Responsive Scaling */
 .wallpaper-logo {
-  width: clamp(300px, 50vw, 750px);
+  width: clamp(240px, 75vw, 750px);
+  max-width: 90vw;
+  max-height: 48vh;
   height: auto;
-  max-height: 45vh;
   object-fit: contain;
   border-radius: 20px;
   filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 20px rgba(0, 195, 255, 0.25));
   pointer-events: none;
   user-select: none;
+  transition: width 0.3s ease, max-height 0.3s ease, border-radius 0.3s ease;
 }
 
 /* Minimal Floating Controls Bar (Exibida na Home) */
@@ -137,16 +143,41 @@ html, body {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* Mobile Adjustments */
+/* Mobile Responsiveness & Landscape Queries */
 @media (max-width: 768px) {
-  .wallpaper-logo {
-    width: 85vw;
-    border-radius: 16px;
+  .wallpaper-wrapper {
+    padding: 1rem;
   }
+  
+  .wallpaper-logo {
+    width: 88vw;
+    max-height: 52vh;
+    border-radius: 14px;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 15px rgba(0, 195, 255, 0.3));
+  }
+
   .minimal-controls {
     bottom: 1rem;
     right: 50%;
     transform: translateX(50%);
     opacity: 0.85;
+  }
+
+  .control-actions {
+    padding: 0.5rem 0.8rem;
+    gap: 0.6rem;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* Mobile Landscape Orientation Adjustments */
+@media (max-height: 500px) {
+  .wallpaper-logo {
+    max-height: 65vh;
+    width: auto;
   }
 }

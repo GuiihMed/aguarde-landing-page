@@ -2,6 +2,7 @@
  * WDCOM Mídia Digital - Interactive Canvas Engine
  * Clean, elegant wallpaper background with autonomous 3D wireframe geometry,
  * crisp static dot/plus grid, topographic waves, ambient particles, and click shockwaves.
+ * Mobile & Desktop Responsive 60 FPS Engine.
  */
 
 class InteractiveBackgroundEngine {
@@ -133,6 +134,9 @@ class InteractiveBackgroundEngine {
 
     this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
+    // Responsive grid spacing based on screen size
+    this.gridSpacing = this.width < 600 ? 38 : 50;
+
     this.createGrid();
     this.createTetrahedrons();
   }
@@ -163,11 +167,12 @@ class InteractiveBackgroundEngine {
   }
 
   triggerShockwave(x, y) {
+    const maxR = Math.min(this.width, this.height) * 0.5;
     this.shockwaves.push({
       x: x,
       y: y,
       radius: 0,
-      maxRadius: 350,
+      maxRadius: Math.max(250, maxR),
       speed: 10,
       strength: 35,
       alpha: 1
@@ -195,19 +200,21 @@ class InteractiveBackgroundEngine {
           vx: 0,
           vy: 0,
           isPlus: isPlus,
-          size: isPlus ? 4.5 : 1.8
+          size: isPlus ? (this.width < 600 ? 3.5 : 4.5) : (this.width < 600 ? 1.5 : 1.8)
         });
       }
     }
   }
 
-  // Create 3D Wireframe Tetrahedrons (pyramids)
+  // Create 3D Wireframe Tetrahedrons (pyramids) - Responsive Scaling
   createTetrahedrons() {
+    const scale = Math.max(0.65, Math.min(this.width, this.height) / 750);
+
     this.tetrahedrons = [
       {
         cx: this.width * 0.72,
         cy: this.height * 0.18,
-        size: 55,
+        size: 55 * scale,
         rotX: 0.3,
         rotY: 0.5,
         rotZ: 0.1,
@@ -218,7 +225,7 @@ class InteractiveBackgroundEngine {
       {
         cx: this.width * 0.25,
         cy: this.height * 0.85,
-        size: 68,
+        size: 68 * scale,
         rotX: 0.8,
         rotY: 0.2,
         rotZ: 0.4,
@@ -229,7 +236,7 @@ class InteractiveBackgroundEngine {
       {
         cx: this.width * 0.88,
         cy: this.height * 0.65,
-        size: 38,
+        size: 38 * scale,
         rotX: 1.2,
         rotY: 0.9,
         rotZ: 0.3,
@@ -344,7 +351,7 @@ class InteractiveBackgroundEngine {
       const node = this.gridNodes[i];
 
       if (node.isPlus) {
-        const len = 4;
+        const len = this.width < 600 ? 3.5 : 4;
         this.ctx.strokeStyle = this.theme.gridPlus;
         this.ctx.lineWidth = 1.2;
 
@@ -490,7 +497,7 @@ class InteractiveBackgroundEngine {
     const radius = Math.min(this.width, this.height) * 0.18;
 
     this.ctx.strokeStyle = this.theme.accentCyan;
-    this.ctx.lineWidth = 14;
+    this.ctx.lineWidth = this.width < 600 ? 8 : 14;
     this.ctx.beginPath();
     this.ctx.arc(trX, trY, radius, 0, Math.PI * 2);
     this.ctx.stroke();
