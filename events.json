@@ -1,0 +1,16 @@
+{
+  "default": {
+    "slug": "wdcom",
+    "name": "WDCOM Mídia Digital",
+    "logo": "assets/logo-mark.png",
+    "palette": "wdcom",
+    "status": "Em Breve"
+  },
+  "wdcom": {
+    "slug": "wdcom",
+    "name": "WDCOM Mídia Digital",
+    "logo": "assets/logo-mark.png",
+    "palette": "wdcom",
+    "status": "Em Breve"
+  }
+}

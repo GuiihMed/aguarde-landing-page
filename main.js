@@ -1,14 +1,86 @@
 /**
- * WDCOM Mídia Digital - Fullscreen Wallpaper Controls & Interactions
+ * WDCOM & Eventos - Dynamic Aguarde Landing Page Engine
+ * Supports URL parameters (?evento=nome, ?logo=URL, ?palette=black)
+ * and central event registry (events.json).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  const wallpaperLogo = document.getElementById('wallpaper-logo');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   const pulseBtn = document.getElementById('pulse-btn');
   const swatches = document.querySelectorAll('.swatch[data-palette]');
 
-  // 1. Fullscreen Toggle
+  // 1. Parse URL Query Parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventSlug = urlParams.get('evento') || urlParams.get('event');
+  const customLogoUrl = urlParams.get('logo');
+  const customName = urlParams.get('nome') || urlParams.get('name');
+  const customPalette = urlParams.get('palette') || urlParams.get('cor');
+
+  // Load Event Data from events.json or URL query params
+  async function loadEventConfig() {
+    let logoUrl = 'assets/logo-mark.png';
+    let eventName = 'Aguarde';
+    let paletteKey = 'wdcom';
+
+    try {
+      const response = await fetch('events.json');
+      if (response.ok) {
+        const eventsData = await response.json();
+
+        if (eventSlug && eventsData[eventSlug]) {
+          const config = eventsData[eventSlug];
+          logoUrl = config.logo || logoUrl;
+          eventName = config.name || eventName;
+          paletteKey = config.palette || paletteKey;
+        } else if (eventsData.default) {
+          logoUrl = eventsData.default.logo || logoUrl;
+          eventName = eventsData.default.name || eventName;
+          paletteKey = eventsData.default.palette || paletteKey;
+        }
+      }
+    } catch (err) {
+      console.warn('Configuração de eventos carregada no modo padrão:', err);
+    }
+
+    // Override with direct query parameters if passed (?logo=...&nome=...)
+    if (customLogoUrl) {
+      logoUrl = customLogoUrl;
+    }
+    if (customName) {
+      eventName = customName;
+    }
+    if (customPalette) {
+      paletteKey = customPalette;
+    }
+
+    // Apply Logo & Title
+    if (wallpaperLogo) {
+      wallpaperLogo.src = logoUrl;
+      wallpaperLogo.alt = `${eventName} - Aguarde`;
+    }
+
+    document.title = `${eventName} | Aguarde`;
+
+    // Apply Theme Palette
+    if (window.bgEngine) {
+      window.bgEngine.setPalette(paletteKey);
+      
+      // Update active swatch state
+      swatches.forEach(s => {
+        if (s.getAttribute('data-palette') === paletteKey) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  loadEventConfig();
+
+  // 2. Fullscreen Toggle
   if (fullscreenBtn) {
     fullscreenBtn.addEventListener('click', () => {
       if (!document.fullscreenElement) {
@@ -23,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Shockwave Pulse Button
+  // 3. Shockwave Pulse Button
   if (pulseBtn) {
     pulseBtn.addEventListener('click', () => {
       if (window.bgEngine) {
@@ -36,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Color Palette Switcher
+  // 4. Color Palette Switcher
   swatches.forEach(swatch => {
     swatch.addEventListener('click', () => {
       swatches.forEach(s => s.classList.remove('active'));
