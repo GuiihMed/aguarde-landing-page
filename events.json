@@ -12,5 +12,26 @@
     "logo": "assets/logo-mark.png",
     "palette": "wdcom",
     "status": "Em Breve"
+  },
+  "sonafe-df": {
+    "slug": "sonafe-df",
+    "name": "2ª Jornada de Fisioterapia Esportiva do DF",
+    "logo": "assets/sonafe-df.png",
+    "palette": "sonafe",
+    "status": "Em Breve"
+  },
+  "sonafe": {
+    "slug": "sonafe-df",
+    "name": "2ª Jornada de Fisioterapia Esportiva do DF",
+    "logo": "assets/sonafe-df.png",
+    "palette": "sonafe",
+    "status": "Em Breve"
+  },
+  "2a-jornada-fisioterapia": {
+    "slug": "sonafe-df",
+    "name": "2ª Jornada de Fisioterapia Esportiva do DF",
+    "logo": "assets/sonafe-df.png",
+    "palette": "sonafe",
+    "status": "Em Breve"
   }
 }

@@ -35,6 +35,18 @@ class InteractiveBackgroundEngine {
         glow: 'rgba(0, 195, 255, 0.15)',
         particle: 'rgba(255, 255, 255, 0.8)'
       },
+      sonafe: {
+        name: 'SONAFE DF (Verde & Azul)',
+        bgGradient: ['#04202d', '#083832', '#021820'],
+        gridDot: 'rgba(255, 255, 255, 0.35)',
+        gridPlus: 'rgba(123, 160, 54, 0.75)',
+        accentCyan: '#7ba036',
+        accentTeal: '#0066a1',
+        waveLine: 'rgba(123, 160, 54, 0.4)',
+        wireframeLine: 'rgba(0, 102, 161, 0.8)',
+        glow: 'rgba(123, 160, 54, 0.25)',
+        particle: 'rgba(255, 255, 255, 0.9)'
+      },
       black: {
         name: 'Tela Preta (OLED Black)',
         bgGradient: ['#000000', '#000000', '#000000'],
@@ -250,7 +262,6 @@ class InteractiveBackgroundEngine {
     for (let i = 0; i < this.gridNodes.length; i++) {
       const node = this.gridNodes[i];
 
-      // Only affected by click shockwaves (no mouse hover displacement)
       for (let s = 0; s < this.shockwaves.length; s++) {
         const sw = this.shockwaves[s];
         const sdx = node.x - sw.x;
@@ -266,7 +277,6 @@ class InteractiveBackgroundEngine {
         }
       }
 
-      // Spring back to base position
       const pdx = node.baseX - node.x;
       const pdy = node.baseY - node.y;
 
@@ -316,7 +326,6 @@ class InteractiveBackgroundEngine {
     this.ctx.fillStyle = grad;
     this.ctx.fillRect(0, 0, this.width, this.height);
 
-    // Fixed ambient soft glow in center
     const radial = this.ctx.createRadialGradient(
       this.width * 0.5, this.height * 0.5, 0,
       this.width * 0.5, this.height * 0.5, Math.max(this.width, this.height) * 0.6
@@ -327,7 +336,7 @@ class InteractiveBackgroundEngine {
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
-  // Draw Grid of Dots and Pluses (Clean, Geometric, Alignment Intact)
+  // Draw Grid of Dots and Pluses
   drawGrid() {
     this.ctx.save();
 
@@ -356,7 +365,7 @@ class InteractiveBackgroundEngine {
     this.ctx.restore();
   }
 
-  // Draw Fluid Topographic Sine Waves (top-left & bottom-right)
+  // Draw Fluid Topographic Sine Waves
   drawWaves() {
     this.ctx.save();
     this.ctx.strokeStyle = this.theme.waveLine;
@@ -402,7 +411,7 @@ class InteractiveBackgroundEngine {
     this.ctx.restore();
   }
 
-  // Render 3D Wireframe Tetrahedrons (Pyramids) - Autonomous Smooth 3D Rotation
+  // Render 3D Wireframe Tetrahedrons (Pyramids)
   drawTetrahedrons() {
     this.ctx.save();
 
