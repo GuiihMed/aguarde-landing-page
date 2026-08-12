@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WDCOM Mídia Digital - Wallpaper Interativo</title>
+  <meta name="description" content="Wallpaper interativo da WDCOM Mídia Digital com física 60 FPS e logo centralizada.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fullscreen Interactive Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Centered Pure Logo (Sem caixas, card ou hover) -->
+  <main class="wallpaper-wrapper">
+    <img src="assets/logo-mark.png" alt="WDCOM Mídia Digital Logo" class="wallpaper-logo">
+  </main>
+
+  <!-- Minimal Auto-hiding Controls (Corner Bar) -->
+  <div class="minimal-controls" id="controls-bar">
+    <div class="control-actions">
+      <!-- Fullscreen Toggle -->
+      <button class="icon-btn" id="fullscreen-btn" title="Tela Cheia (Fullscreen)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+
+      <!-- Shockwave Trigger -->
+      <button class="icon-btn" id="pulse-btn" title="Disparar Onda de Impacto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+      </button>
+
+      <!-- Color Swatches -->
+      <div class="swatch-list">
+        <div class="swatch active" data-palette="wdcom" style="background: #00c3ff;" title="WDCOM Teal"></div>
+        <div class="swatch" data-palette="black" style="background: #000000; border: 1px solid #444;" title="Tela Preta (OLED Black)"></div>
+        <div class="swatch" data-palette="cyber" style="background: #ff007f;" title="Cyber Neon"></div>
+        <div class="swatch" data-palette="gold" style="background: #ffb703;" title="Midnight Gold"></div>
+        <div class="swatch" data-palette="emerald" style="background: #00e676;" title="Emerald Matrix"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="canvas-background.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

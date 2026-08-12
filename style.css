@@ -1,0 +1,150 @@
+/* ==========================================================================
+   WDCOM Mídia Digital - Fullscreen Interactive Wallpaper Styles
+   ========================================================================== */
+
+:root {
+  --bg-dark: #042b3d;
+  --accent-cyan: #00c3ff;
+  --accent-teal: #008ba3;
+  --text-white: #ffffff;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Fullscreen Background Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+/* Centered Wallpaper Content (No Box, No Card, No Hover Effects) */
+.wallpaper-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let all mouse events pass straight to interactive canvas */
+}
+
+/* Pure Logo Image */
+.wallpaper-logo {
+  width: clamp(300px, 50vw, 750px);
+  height: auto;
+  max-height: 45vh;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 20px rgba(0, 195, 255, 0.25));
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Minimal Floating Controls Bar */
+.minimal-controls {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.minimal-controls:hover {
+  opacity: 1;
+}
+
+.control-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(3, 27, 38, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-btn:hover {
+  background: var(--accent-cyan);
+  color: #031b26;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+.swatch-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.swatch:hover {
+  transform: scale(1.25);
+}
+
+.swatch.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .wallpaper-logo {
+    width: 85vw;
+  }
+  .minimal-controls {
+    bottom: 1rem;
+    right: 50%;
+    transform: translateX(50%);
+    opacity: 0.85;
+  }
+}
