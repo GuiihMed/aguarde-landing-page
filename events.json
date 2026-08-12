@@ -3,6 +3,7 @@
     "slug": "wdcom",
     "name": "WDCOM Mídia Digital",
     "logo": "assets/logo-mark.png",
+    "shareLogo": "assets/social-share-logo.png",
     "palette": "wdcom",
     "status": ""
   },
@@ -10,6 +11,7 @@
     "slug": "wdcom",
     "name": "WDCOM Mídia Digital",
     "logo": "assets/logo-mark.png",
+    "shareLogo": "assets/social-share-logo.png",
     "palette": "wdcom",
     "status": ""
   },
@@ -17,6 +19,7 @@
     "slug": "sonafe-df",
     "name": "2ª Jornada de Fisioterapia Esportiva do DF",
     "logo": "assets/sonafe-df.png",
+    "shareLogo": "assets/sonafe-df.png",
     "palette": "sonafe",
     "status": "AGUARDE"
   }

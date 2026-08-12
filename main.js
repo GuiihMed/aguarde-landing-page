@@ -1,7 +1,8 @@
 /**
  * WDCOM & Eventos - Dynamic Landing Page Engine
- * Home & WDCOM base routes (/ and /wdcom): Displays official clean white/cyan WDCOM logo on wallpaper (no box, no aguarde badge).
- * Internal Event Pages (/sonafe-df): Displays event logo & AGUARDE status badge, hides controls bar.
+ * Home & WDCOM base routes (/ and /wdcom): Displays official clean white/cyan WDCOM logo on wallpaper.
+ * Social Share Cards (WhatsApp / Open Graph): Displays exact social-share-logo.png card image as requested.
+ * Internal Event Pages (/sonafe-df): Displays event logo & AGUARDE status badge.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -94,13 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
           eventName = config.name || eventName;
           paletteKey = config.palette || paletteKey;
           rawStatus = config.status || 'AGUARDE';
-          shareLogoUrl = config.logo || shareLogoUrl;
+          shareLogoUrl = config.shareLogo || config.logo || shareLogoUrl;
         } else if (eventsData.default) {
           logoUrl = eventsData.default.logo || logoUrl;
           eventName = eventsData.default.name || eventName;
           paletteKey = eventsData.default.palette || paletteKey;
           rawStatus = eventsData.default.status || '';
-          shareLogoUrl = eventsData.default.logo || shareLogoUrl;
+          shareLogoUrl = eventsData.default.shareLogo || shareLogoUrl;
         }
       }
     } catch (err) {
@@ -143,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.title = pageTitle;
 
     // Update Open Graph Social Preview Meta Tags dynamically
-    const absoluteSocialLogoUrl = getAbsoluteImageUrl(shareLogoUrl);
+    const absoluteSocialLogoUrl = isInternalEventPage 
+      ? getAbsoluteImageUrl(shareLogoUrl) 
+      : 'https://wdcom-interactive-landing.vercel.app/assets/social-share-logo.png';
 
     if (ogTitle) ogTitle.setAttribute('content', pageTitle);
     if (ogDescription) ogDescription.setAttribute('content', pageDesc);
