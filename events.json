@@ -2,14 +2,14 @@
   "default": {
     "slug": "wdcom",
     "name": "WDCOM Mídia Digital",
-    "logo": "assets/logo-mark.png",
+    "logo": "assets/social-share-logo.png",
     "palette": "wdcom",
     "status": "AGUARDE"
   },
   "wdcom": {
     "slug": "wdcom",
     "name": "WDCOM Mídia Digital",
-    "logo": "assets/logo-mark.png",
+    "logo": "assets/social-share-logo.png",
     "palette": "wdcom",
     "status": "AGUARDE"
   },

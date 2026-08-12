@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
-    let logoUrl = 'assets/logo-mark.png';
+    let logoUrl = 'assets/social-share-logo.png';
     let eventName = 'WDCOM Mídia Digital';
     let paletteKey = 'wdcom';
     let rawStatus = 'AGUARDE';
@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
           eventName = eventsData.default.name || eventName;
           paletteKey = eventsData.default.palette || paletteKey;
           rawStatus = eventsData.default.status || 'AGUARDE';
+          shareLogoUrl = eventsData.default.logo || shareLogoUrl;
         }
       }
     } catch (err) {
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rawStatus = customStatus;
     }
 
-    // Apply Logo on screen (keeps logo-mark.png on Home), Status Badge & Document Title
+    // Apply Logo on screen, Status Badge & Document Title
     if (wallpaperLogo) {
       wallpaperLogo.src = logoUrl;
       wallpaperLogo.alt = `${eventName} - Aguarde`;
@@ -130,10 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.title = pageTitle;
 
-    // Update Open Graph Social Preview Meta Tags dynamically (uses social-share-logo.png for Home)
-    const absoluteSocialLogoUrl = isInternalEventPage
-      ? getAbsoluteImageUrl(shareLogoUrl)
-      : 'https://wdcom-interactive-landing.vercel.app/assets/social-share-logo.png';
+    // Update Open Graph Social Preview Meta Tags dynamically
+    const absoluteSocialLogoUrl = getAbsoluteImageUrl(shareLogoUrl);
 
     if (ogTitle) ogTitle.setAttribute('content', pageTitle);
     if (ogDescription) ogDescription.setAttribute('content', pageDesc);
