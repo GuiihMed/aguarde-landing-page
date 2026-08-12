@@ -46,12 +46,13 @@ html, body {
   pointer-events: none;
 }
 
-/* Pure Logo Image */
+/* Pure Logo Image with Rounded Corners */
 .wallpaper-logo {
   width: clamp(300px, 50vw, 750px);
   height: auto;
   max-height: 45vh;
   object-fit: contain;
+  border-radius: 20px;
   filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 20px rgba(0, 195, 255, 0.25));
   pointer-events: none;
   user-select: none;
@@ -140,6 +141,7 @@ html, body {
 @media (max-width: 768px) {
   .wallpaper-logo {
     width: 85vw;
+    border-radius: 16px;
   }
   .minimal-controls {
     bottom: 1rem;
