@@ -1,6 +1,6 @@
 /**
  * WDCOM & Eventos - Dynamic Landing Page Engine
- * Home & WDCOM base routes (/ and /wdcom): Shows ONLY the interactive canvas wallpaper (no logo, no box, no aguarde badge).
+ * Home & WDCOM base routes (/ and /wdcom): Displays official clean white/cyan WDCOM logo on wallpaper (no box, no aguarde badge).
  * Internal Event Pages (/sonafe-df): Displays event logo & AGUARDE status badge, hides controls bar.
  */
 
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pathParts = cleanPath.split('/').filter(p => p && p !== 'index.html');
   const pathSlug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : null;
 
-  // Treat root "/" AND "/wdcom" as base clean routes
+  // Treat root "/" AND "/wdcom" as base routes displaying the official WDCOM logo
   const isBaseWdcomRoute = !pathSlug || pathSlug === 'wdcom';
   const isInternalEventPage = !isBaseWdcomRoute && Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || urlParams.get('logo'));
 
@@ -47,17 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (wallpaperWrapper) {
-    // Hide center logo, box, and AGUARDE badge completely on / and /wdcom
-    // Display center container ONLY on internal event routes (/sonafe-df, etc.)
-    wallpaperWrapper.style.display = isInternalEventPage ? 'flex' : 'none';
-  }
-
-  if (wallpaperStatus) {
-    wallpaperStatus.style.display = isInternalEventPage ? 'inline-flex' : 'none';
+    wallpaperWrapper.style.display = 'flex';
   }
 
   if (wallpaperLogo) {
-    wallpaperLogo.style.display = isInternalEventPage ? 'block' : 'none';
+    wallpaperLogo.style.display = 'block';
+  }
+
+  if (wallpaperStatus) {
+    // Hide AGUARDE badge on base routes (/ and /wdcom), show ONLY on internal event routes (/sonafe-df)
+    wallpaperStatus.style.display = isInternalEventPage ? 'inline-flex' : 'none';
   }
 
   // Format status string cleanly (e.g., "AGUARDE")
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
-    let logoUrl = 'assets/social-share-logo.png';
+    let logoUrl = 'assets/logo-mark.png';
     let eventName = 'WDCOM Mídia Digital';
     let paletteKey = 'wdcom';
     let rawStatus = 'AGUARDE';
@@ -123,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
       rawStatus = customStatus;
     }
 
-    // Apply Logo on screen, Status Badge & Document Title (for event pages)
-    if (wallpaperLogo && isInternalEventPage) {
+    // Apply Logo on screen
+    if (wallpaperLogo) {
       wallpaperLogo.src = logoUrl;
       wallpaperLogo.alt = eventName;
     }
