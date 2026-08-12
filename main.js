@@ -2,6 +2,7 @@
  * WDCOM & Eventos - Dynamic Aguarde Landing Page Engine
  * Displays controls bar ONLY on the root home page (/)
  * Hides controls bar on internal event pages (/wdcom, /sonafe-df, /nome-do-evento)
+ * Dynamically updates Open Graph social media sharing cards for WhatsApp, Instagram, Telegram & Twitter
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const pulseBtn = document.getElementById('pulse-btn');
   const swatches = document.querySelectorAll('.swatch[data-palette]');
   const controlsBar = document.getElementById('controls-bar');
+
+  // Social Share Meta Tag Elements
+  const ogTitle = document.getElementById('og-title');
+  const ogDescription = document.getElementById('og-description');
+  const ogImage = document.getElementById('og-image');
+  const twTitle = document.getElementById('tw-title');
+  const twDescription = document.getElementById('tw-description');
+  const twImage = document.getElementById('tw-image');
 
   // Parse Pathname & Query Parameters
   const urlParams = new URLSearchParams(window.location.search);
@@ -39,10 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Format status string cleanly without unnatural character gaps (e.g., "AGUARDE")
+  // Format status string cleanly (e.g., "AGUARDE")
   function formatStatusText(str) {
     if (!str) return 'AGUARDE';
     return str.trim().toUpperCase();
+  }
+
+  // Helper to resolve absolute image URL for Open Graph cards
+  function getAbsoluteImageUrl(relativeOrAbsolute) {
+    if (!relativeOrAbsolute) return 'https://wdcom-interactive-landing.vercel.app/assets/logo-mark.png';
+    if (relativeOrAbsolute.startsWith('http://') || relativeOrAbsolute.startsWith('https://')) {
+      return relativeOrAbsolute;
+    }
+    const cleanRel = relativeOrAbsolute.replace(/^\/+/, '');
+    return `https://wdcom-interactive-landing.vercel.app/${cleanRel}`;
   }
 
   // Load Event Data from events.json or URL parameters
@@ -98,7 +117,24 @@ document.addEventListener('DOMContentLoaded', () => {
       statusText.textContent = formatStatusText(rawStatus);
     }
 
-    document.title = `${eventName} | Aguarde`;
+    const pageTitle = isInternalEventPage
+      ? `${eventName} | Aguarde`
+      : `WDCOM | Página de Aguarde Interativa para Sites e Eventos`;
+      
+    const pageDesc = isInternalEventPage
+      ? `Página de aguarde interativa para o evento ${eventName}. Desenvolvido por WDCOM Mídia Digital.`
+      : `Página de aguarde interativa, moderna e personalizada para lançamentos de sites, marcas e grandes eventos. Desenvolvido por WDCOM Mídia Digital.`;
+
+    document.title = pageTitle;
+
+    // Update Open Graph Social Preview Meta Tags dynamically
+    const absoluteLogoUrl = getAbsoluteImageUrl(logoUrl);
+    if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+    if (ogDescription) ogDescription.setAttribute('content', pageDesc);
+    if (ogImage) ogImage.setAttribute('content', absoluteLogoUrl);
+    if (twTitle) twTitle.setAttribute('content', pageTitle);
+    if (twDescription) twDescription.setAttribute('content', pageDesc);
+    if (twImage) twImage.setAttribute('content', absoluteLogoUrl);
 
     // Apply Theme Palette
     if (window.bgEngine) {
