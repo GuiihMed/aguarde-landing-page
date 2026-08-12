@@ -10,16 +10,22 @@
   <link rel="icon" type="image/png" href="assets/logo-mark.png">
   
   <!-- CSS Stylesheet (Cache-Busting Version) -->
-  <link rel="stylesheet" href="style.css?v=3.0.0">
+  <link rel="stylesheet" href="style.css?v=4.0.0">
 </head>
 <body>
 
   <!-- Fullscreen Interactive Canvas Background -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Centered Event Logo -->
+  <!-- Centered Event Logo & Aguarde Status Badge -->
   <main class="wallpaper-wrapper">
-    <img src="assets/logo-mark.png" alt="Logo do Evento" class="wallpaper-logo" id="wallpaper-logo">
+    <div class="wallpaper-center-container">
+      <img src="assets/logo-mark.png" alt="Logo do Evento" class="wallpaper-logo" id="wallpaper-logo">
+      <div class="wallpaper-status-badge" id="wallpaper-status">
+        <span class="badge-pulse-dot"></span>
+        <span class="badge-text" id="status-text">A G U A R D E</span>
+      </div>
+    </div>
   </main>
 
   <!-- Controls Bar (Exibida APENAS na Página Inicial) -->
@@ -52,7 +58,7 @@
   </div>
 
   <!-- Scripts (Cache-Busting Version) -->
-  <script src="canvas-background.js?v=3.0.0"></script>
-  <script src="main.js?v=3.0.0"></script>
+  <script src="canvas-background.js?v=4.0.0"></script>
+  <script src="main.js?v=4.0.0"></script>
 </body>
 </html>

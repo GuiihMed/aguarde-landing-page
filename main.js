@@ -1,12 +1,13 @@
 /**
  * WDCOM & Eventos - Dynamic Aguarde Landing Page Engine
  * Displays controls bar ONLY on the root home page (/)
- * Hides controls bar on internal event pages (/wdcom, /nome-do-evento)
+ * Hides controls bar on internal event pages (/wdcom, /sonafe-df, /nome-do-evento)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const wallpaperLogo = document.getElementById('wallpaper-logo');
+  const statusText = document.getElementById('status-text');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   const pulseBtn = document.getElementById('pulse-btn');
   const swatches = document.querySelectorAll('.swatch[data-palette]');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Parse Pathname & Query Parameters
   const urlParams = new URLSearchParams(window.location.search);
   
-  // Extract path slug (e.g., /wdcom -> "wdcom", /aguarde/rockinrio -> "rockinrio")
+  // Extract path slug (e.g., /wdcom -> "wdcom", /sonafe-df -> "sonafe-df")
   const cleanPath = window.location.pathname.replace(/^\/+|\/+$/g, '');
   const pathParts = cleanPath.split('/').filter(p => p && p !== 'index.html');
   const pathSlug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : null;
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const customLogoUrl = urlParams.get('logo');
   const customName = urlParams.get('nome') || urlParams.get('name');
   const customPalette = urlParams.get('palette') || urlParams.get('cor');
+  const customStatus = urlParams.get('status');
 
   // Determine if this is an internal event page vs root home page
   const isInternalEventPage = Boolean(pathSlug || urlParams.get('evento') || urlParams.get('event') || customLogoUrl);
@@ -37,11 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Format status string with letter spacing (e.g., "AGUARDE" -> "A G U A R D E")
+  function formatStatusText(str) {
+    if (!str) return 'A G U A R D E';
+    const clean = str.trim().toUpperCase().replace(/\s+/g, '');
+    return clean.split('').join(' ');
+  }
+
   // Load Event Data from events.json or URL parameters
   async function loadEventConfig() {
     let logoUrl = 'assets/logo-mark.png';
     let eventName = 'WDCOM Mídia Digital';
     let paletteKey = 'wdcom';
+    let rawStatus = 'AGUARDE';
 
     try {
       const response = await fetch('/events.json');
@@ -53,10 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
           logoUrl = config.logo || logoUrl;
           eventName = config.name || eventName;
           paletteKey = config.palette || paletteKey;
+          rawStatus = config.status || rawStatus;
         } else if (eventsData.default) {
           logoUrl = eventsData.default.logo || logoUrl;
           eventName = eventsData.default.name || eventName;
           paletteKey = eventsData.default.palette || paletteKey;
+          rawStatus = eventsData.default.status || rawStatus;
         }
       }
     } catch (err) {
@@ -73,11 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (customPalette) {
       paletteKey = customPalette;
     }
+    if (customStatus) {
+      rawStatus = customStatus;
+    }
 
-    // Apply Logo & Title
+    // Apply Logo, Status Badge & Document Title
     if (wallpaperLogo) {
       wallpaperLogo.src = logoUrl;
       wallpaperLogo.alt = `${eventName} - Aguarde`;
+    }
+
+    if (statusText) {
+      statusText.textContent = formatStatusText(rawStatus);
     }
 
     document.title = `${eventName} | Aguarde`;

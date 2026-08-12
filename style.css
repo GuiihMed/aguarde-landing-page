@@ -3,6 +3,8 @@
    Responsive & Mobile Optimized
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Montserrat:wght@500;600;700&display=swap');
+
 :root {
   --bg-dark: #042b3d;
   --accent-cyan: #00c3ff;
@@ -21,9 +23,10 @@ html, body {
   height: 100%;
   overflow: hidden;
   background-color: var(--bg-dark);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: none; /* Prevent unwanted pull-to-refresh on mobile devices */
+  touch-action: none;
 }
 
 /* Fullscreen Background Canvas */
@@ -37,7 +40,7 @@ html, body {
   touch-action: none;
 }
 
-/* Centered Wallpaper Content */
+/* Centered Wallpaper Content Wrapper */
 .wallpaper-wrapper {
   position: relative;
   z-index: 10;
@@ -50,11 +53,21 @@ html, body {
   padding: 1.5rem;
 }
 
+/* Center Container (Logo + Status Badge) */
+.wallpaper-center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
+  pointer-events: none;
+}
+
 /* Pure Logo Image with Fluid & Mobile Responsive Scaling */
 .wallpaper-logo {
-  width: clamp(240px, 75vw, 750px);
+  width: clamp(240px, 50vw, 750px);
   max-width: 90vw;
-  max-height: 48vh;
+  max-height: 44vh;
   height: auto;
   object-fit: contain;
   border-radius: 20px;
@@ -62,6 +75,46 @@ html, body {
   pointer-events: none;
   user-select: none;
   transition: width 0.3s ease, max-height 0.3s ease, border-radius 0.3s ease;
+}
+
+/* Glassmorphic "AGUARDE" Status Badge */
+.wallpaper-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.65rem 1.8rem;
+  background: rgba(3, 27, 38, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 195, 255, 0.35);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(0, 195, 255, 0.2);
+  color: var(--text-white);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.75rem, 1.6vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+/* Pulsing Glowing Dot inside Status Badge */
+.badge-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent-cyan);
+  animation: pulseGlow 1.8s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 195, 255, 0.7); }
+  70% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 10px rgba(0, 195, 255, 0); }
+  100% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 0 0 rgba(0, 195, 255, 0); }
 }
 
 /* Minimal Floating Controls Bar (Exibida na Home) */
@@ -148,12 +201,21 @@ html, body {
   .wallpaper-wrapper {
     padding: 1rem;
   }
+
+  .wallpaper-center-container {
+    gap: 1.2rem;
+  }
   
   .wallpaper-logo {
     width: 88vw;
-    max-height: 52vh;
+    max-height: 48vh;
     border-radius: 14px;
     filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 15px rgba(0, 195, 255, 0.3));
+  }
+
+  .wallpaper-status-badge {
+    padding: 0.5rem 1.4rem;
+    letter-spacing: 0.45em;
   }
 
   .minimal-controls {
@@ -176,8 +238,11 @@ html, body {
 
 /* Mobile Landscape Orientation Adjustments */
 @media (max-height: 500px) {
+  .wallpaper-center-container {
+    gap: 0.8rem;
+  }
   .wallpaper-logo {
-    max-height: 65vh;
+    max-height: 58vh;
     width: auto;
   }
 }
