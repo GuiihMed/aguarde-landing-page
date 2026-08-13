@@ -1,8 +1,8 @@
 /**
  * WDCOM & Eventos - Dynamic Landing Page Engine
  * Home & WDCOM base routes (/ and /wdcom): Displays official clean white/cyan WDCOM logo on wallpaper.
- * Social Share Cards (WhatsApp / Open Graph): Displays exact social-share-logo.png card image as requested.
- * Internal Event Pages (/sonafe-df): Displays event logo & AGUARDE status badge.
+ * Internal Event Pages (/sonafe-df, /slug-do-evento): Displays event logo & AGUARDE status badge, hides controls bar.
+ * Reads both built-in events.json and custom owner-created events from localStorage.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,14 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper to resolve absolute image URL for Open Graph cards
   function getAbsoluteImageUrl(relativeOrAbsolute) {
     if (!relativeOrAbsolute) return 'https://wdcom-interactive-landing.vercel.app/assets/social-share-logo.png';
-    if (relativeOrAbsolute.startsWith('http://') || relativeOrAbsolute.startsWith('https://')) {
+    if (relativeOrAbsolute.startsWith('http://') || relativeOrAbsolute.startsWith('https://') || relativeOrAbsolute.startsWith('data:image/')) {
       return relativeOrAbsolute;
     }
     const cleanRel = relativeOrAbsolute.replace(/^\/+/, '');
     return `https://wdcom-interactive-landing.vercel.app/${cleanRel}`;
   }
 
-  // Load Event Data from events.json or URL parameters
+  // Load Event Data from events.json, custom localStorage, or URL parameters
   async function loadEventConfig() {
     let logoUrl = 'assets/logo-mark.png';
     let eventName = 'WDCOM Mídia Digital';
@@ -84,28 +84,44 @@ document.addEventListener('DOMContentLoaded', () => {
     let rawStatus = 'AGUARDE';
     let shareLogoUrl = 'assets/social-share-logo.png';
 
+    // 1. Fetch built-in events.json
+    let builtInEvents = {};
     try {
       const response = await fetch('/events.json');
       if (response.ok) {
-        const eventsData = await response.json();
-
-        if (eventSlug && eventsData[eventSlug]) {
-          const config = eventsData[eventSlug];
-          logoUrl = config.logo || logoUrl;
-          eventName = config.name || eventName;
-          paletteKey = config.palette || paletteKey;
-          rawStatus = config.status || 'AGUARDE';
-          shareLogoUrl = config.shareLogo || config.logo || shareLogoUrl;
-        } else if (eventsData.default) {
-          logoUrl = eventsData.default.logo || logoUrl;
-          eventName = eventsData.default.name || eventName;
-          paletteKey = eventsData.default.palette || paletteKey;
-          rawStatus = eventsData.default.status || '';
-          shareLogoUrl = eventsData.default.shareLogo || shareLogoUrl;
-        }
+        builtInEvents = await response.json();
       }
     } catch (err) {
-      console.warn('Configuração de eventos carregada no modo padrão:', err);
+      console.warn('Configuração de eventos estáticos indisponível:', err);
+    }
+
+    // 2. Fetch custom owner-created events from localStorage
+    let storedEvents = {};
+    if (window.getCustomEvents) {
+      storedEvents = window.getCustomEvents();
+    } else {
+      try {
+        const raw = localStorage.getItem('wdcom_custom_events');
+        if (raw) storedEvents = JSON.parse(raw);
+      } catch (e) {}
+    }
+
+    // Merge custom events over built-in events
+    const allEvents = { ...builtInEvents, ...storedEvents };
+
+    if (eventSlug && allEvents[eventSlug]) {
+      const config = allEvents[eventSlug];
+      logoUrl = config.logo || logoUrl;
+      eventName = config.name || eventName;
+      paletteKey = config.palette || paletteKey;
+      rawStatus = config.status || 'AGUARDE';
+      shareLogoUrl = config.shareLogo || config.logo || shareLogoUrl;
+    } else if (allEvents.default) {
+      logoUrl = allEvents.default.logo || logoUrl;
+      eventName = allEvents.default.name || eventName;
+      paletteKey = allEvents.default.palette || paletteKey;
+      rawStatus = allEvents.default.status || '';
+      shareLogoUrl = allEvents.default.shareLogo || shareLogoUrl;
     }
 
     // Override with direct query parameters if passed (?logo=...&nome=...)
@@ -169,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  window.loadEventConfig = loadEventConfig;
   loadEventConfig();
 
   // Fullscreen Toggle
